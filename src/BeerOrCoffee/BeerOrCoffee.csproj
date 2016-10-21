@@ -30,6 +30,9 @@
   <ItemGroup>
     <EmbeddedResource Include="App.xaml" />
     <EmbeddedResource Include="BeerOrCoffeePage.xaml" />
+    <EmbeddedResource Include="UserResultCell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -39,6 +42,14 @@
       <DependentUpon>BeerOrCoffeePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BeerOrCoffeeViewModel.cs" />
+    <Compile Include="UserResultCell.xaml.cs">
+      <DependentUpon>UserResultCell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\UserResultItem.cs" />
+    <Compile Include="Enums\BeerOrCoffeeType.cs" />
+    <Compile Include="ViewModels\NotifiyingViewModel.cs" />
+    <Compile Include="Interfaces\IImageCropService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -59,6 +70,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+    <Folder Include="Enums\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

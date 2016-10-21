@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using BeerOrCoffee.Interfaces;
 using Foundation;
 using UIKit;
 
@@ -13,6 +13,8 @@ namespace BeerOrCoffee.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+
+            Xamarin.Forms.DependencyService.Register<IImageCropService, ImageCropService>();
 
             LoadApplication(new App());
 

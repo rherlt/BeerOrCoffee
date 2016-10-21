@@ -7,6 +7,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using BeerOrCoffee.Interfaces;
 
 namespace BeerOrCoffee.Droid
 {
@@ -21,6 +22,9 @@ namespace BeerOrCoffee.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            Xamarin.Forms.DependencyService.Register<IImageCropService, ImageCropService>();
+            
 
             LoadApplication(new App());
         }
