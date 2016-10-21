@@ -1,7 +1,10 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BeerOrCoffee.Enums;
 using BeerOrCoffee.Interfaces;
+using BeerOrCoffee.Services;
 using BeerOrCoffee.ViewModels;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -12,16 +15,17 @@ namespace BeerOrCoffee
     public partial class BeerOrCoffeePage : ContentPage
     {         private readonly IImageCropService _imageCropService;
         private readonly DataTemplate _userResultTemplate;
+        private readonly EmotionCognitiveSevice _emotionService;
 
         private bool _initialCameraCall;
-
 
         private byte[] _userPhotoBytes;          public BeerOrCoffeePage()         {             InitializeComponent();
 
             ViewModel = new BeerOrCoffeeViewModel();
 
             _userResultTemplate = new DataTemplate(typeof(UserResultCell));
-            _imageCropService = DependencyService.Get<IImageCropService>();         }
+            _imageCropService = DependencyService.Get<IImageCropService>();
+            _emotionService = new EmotionCognitiveSevice();         }
 
         public BeerOrCoffeeViewModel ViewModel
         {
@@ -42,9 +46,29 @@ namespace BeerOrCoffee
 
             UserImage.Source = ImageSource.FromStream(() => new MemoryStream(_userPhotoBytes));
 
-            CreateBeerUser();
+            var result = await _emotionService.SendImage(_userPhotoBytes);
 
-            CreateCoffeeUser();
+            var items = result.Select(face =>
+            {
+                var cropRect = new Rectangle(face.FaceRectangle.Left, face.FaceRectangle.Top, face.FaceRectangle.Width, face.FaceRectangle.Height);
+                var scores = face.Scores;
+
+                // TODO: Rherlt 
+                var coffeeOrBeerType = BeerOrCoffeeType.Beer;
+
+                var croppedImageBytes = _imageCropService.CropImage(_userPhotoBytes, cropRect);
+
+                return new UserResultItem() { UserImage = croppedImageBytes, Type = coffeeOrBeerType };
+            }).ToArray();
+
+            CreateUserImages(items);
+
+            #region Create Demo
+            //CreateBeerUser();
+
+            //CreateCoffeeUser();
+
+            #endregion
 
             // set visibilities
             BeerStack.IsVisible = BeerStack.Children.Any();
@@ -68,6 +92,18 @@ namespace BeerOrCoffee
             TakePhoto().ConfigureAwait(false);
         }
 
+        private void CreateUserImages(IList<UserResultItem> items)
+        {
+            foreach (var item in items)
+            {
+                if(item.Type == BeerOrCoffeeType.Beer)
+                    BeerStack.Children.Add(CreateBeerOrCoffeeResult(item));
+                else
+                    CoffeeStack.Children.Add(CreateBeerOrCoffeeResult(item));
+            }
+        }
+
+        #region Demo
         private void CreateBeerUser()
         {
             // beer demo
@@ -91,6 +127,7 @@ namespace BeerOrCoffee
                 CoffeeStack.Children.Add(CreateBeerOrCoffeeResult(new UserResultItem() { UserImage = croppedImageBytes, Type = Enums.BeerOrCoffeeType.Coffee }));
             }
         }
+        #endregion
 
         private View CreateBeerOrCoffeeResult(object dataContext)
         {

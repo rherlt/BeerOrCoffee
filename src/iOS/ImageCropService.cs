@@ -22,7 +22,7 @@ namespace BeerOrCoffee.iOS
 
                 UIGraphics.BeginImageContextWithOptions(new CGSize((float)rect.Width, (float)rect.Height), true, 1.0f);
 
-                sourceImage.Draw(new CGRect(rect.X, rect.Y, (float)rect.Width, (float)rect.Height));
+                sourceImage.DrawAsPatternInRect(new CGRect(rect.X, rect.Y, (float)rect.Width, (float)rect.Height));
 
                 var resultImage = UIGraphics.GetImageFromCurrentImageContext();
                 UIGraphics.EndImageContext();
