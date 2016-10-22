@@ -54,6 +54,7 @@
     <Compile Include="Enums\BeerOrCoffeeType.cs" />
     <Compile Include="ViewModels\NotifiyingViewModel.cs" />
     <Compile Include="Interfaces\IImageCropService.cs" />
+    <Compile Include="Models\Map.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

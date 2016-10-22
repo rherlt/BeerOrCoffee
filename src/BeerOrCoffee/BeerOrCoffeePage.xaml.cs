@@ -54,7 +54,7 @@ namespace BeerOrCoffee
                 var scores = face.Scores;
 
                 // TODO: Rherlt 
-                var coffeeOrBeerType = BeerOrCoffeeType.Beer;
+                var coffeeOrBeerType = face.Scores.ToBeerOrCoffee();
 
                 var croppedImageBytes = _imageCropService.CropImage(_userPhotoBytes, cropRect);
 

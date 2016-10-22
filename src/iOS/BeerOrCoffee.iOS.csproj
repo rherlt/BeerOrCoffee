@@ -84,7 +84,7 @@
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
     <PlatformTarget>x86</PlatformTarget>
-    <CodesignProvision>b2d902e7-261a-4e24-bdcc-5e54de6db0d9</CodesignProvision>
+    <CodesignProvision>7e6d2a8a-b6fc-43c5-8292-cf521db6f5e2</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
