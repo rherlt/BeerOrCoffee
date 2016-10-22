@@ -50,7 +50,7 @@ namespace BeerOrCoffee
 
             var items = result.Select(face =>
             {
-                var cropRect = new Rectangle(face.FaceRectangle.Left, face.FaceRectangle.Top, face.FaceRectangle.Width, face.FaceRectangle.Height);
+                var cropRect = new Rectangle(face.FaceRectangle.Left, face.FaceRectangle.Top, face.FaceRectangle.Width + face.FaceRectangle.Left, face.FaceRectangle.Height + face.FaceRectangle.Top);
                 var scores = face.Scores;
 
                 // TODO: Rherlt 
